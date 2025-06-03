@@ -1,0 +1,59 @@
+# Dataset mixture of Hypersim and Vkitti2 with
+# Hypersim being resampled, s.t. we get 750k samples
+# of which 10% are from Vkitti2 (similar to Marigold)
+name: Hypersim+Vkitti2
+target: diff2flow.dataloader.WebDataModuleFromConfig
+params:
+  tar_base:
+    - /export/storage/
+    - /p/scratch/degeai/datasets/
+  batch_size: 8
+  num_workers: 2
+  val_batch_size: 4
+  val_num_workers: 1
+  multinode: True
+  remove_keys:
+    - corrected_bump_normal_cam.npy
+    - corrected_normal_cam.npy
+    - normal_bump_cam.npy
+    - normal_cam.npy
+    - original_image.png
+    - original_depth.npy
+  train:
+    shards: hypersim-vkitti-750000/{000000..000951}.tar
+    shuffle: 100
+    image_key: image.png
+    rename:
+      x0: image.png
+      x0_latent: image_latent.npy
+      x1: depth.npy
+      x1_latent: depth_latent.npy
+    dataset_transforms:
+      target: diff2flow.dataset.depth_preprocessing.DatasetPreprocessor
+      params:
+        size: [384, 512]
+        out_channels: 3
+        depth_key: x1
+        return_valid_mask: True
+        exclude_keys_for_resize:
+          - x0_latent
+          - x1_latent
+
+  validation:
+    shards: hypersim-image-depth-latents/val-{000060..000079}.tar
+    image_key: image.png
+    rename:
+      x0: image.png
+      x0_latent: image_latent.npy
+      x1: depth.npy
+      x1_latent: depth_latent.npy
+    dataset_transforms:
+      target: diff2flow.dataset.depth_preprocessing.DatasetPreprocessor
+      params:
+        size: [384, 512]
+        out_channels: 3
+        depth_key: x1
+        return_valid_mask: True
+        exclude_keys_for_resize:
+          - x0_latent
+          - x1_latent

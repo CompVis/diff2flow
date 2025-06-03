@@ -1,0 +1,23 @@
+name: Dummy_Depth
+target: diff2flow.dataloader.DataModuleFromConfig
+params:
+  batch_size: 8
+  num_workers: 4
+  val_batch_size: 4
+  train:
+    target: diff2flow.dataloader.DummyDataset
+    params:
+      x0: [3, 384, 512]           # image
+      x0_latent: [4, 48, 64]      # image latent
+      x1: [3, 384, 512]           # depth
+      x1_latent: [4, 48, 64]      # depth latent
+      valid_mask: [1, 384, 512]   # valid mask for depth
+
+  validation:
+    target: diff2flow.dataloader.DummyDataset
+    params:
+      x0: [3, 384, 512]           # image
+      x0_latent: [4, 48, 64]      # image latent
+      x1: [3, 384, 512]           # depth
+      x1_latent: [4, 48, 64]      # depth latent
+      valid_mask: [1, 384, 512]   # valid mask for depth

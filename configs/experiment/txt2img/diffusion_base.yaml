@@ -1,0 +1,11 @@
+# @package _global_
+defaults:
+  - override /model: diffusion_ch4
+  - override /data: dummy_t2i
+  - override /lora: null
+  - override /task: txt2img
+
+name: txt2img/diffusion/base/v0
+
+train:
+  lr: 1e-5

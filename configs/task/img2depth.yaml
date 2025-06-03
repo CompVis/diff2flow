@@ -1,0 +1,18 @@
+name: img2depth
+# ------------------------ conditioning --------------------------
+# context settings (concatenation)
+context_key: x0_latent
+# conditioning settings (cross-attention)
+conditioning_key: x0
+cond_stage_cfg:
+  target: diff2flow.conditioning.encoders.DummyOpenCLIPTextEmbedder
+  params:
+    nulltext_path: checkpoints/nulltext_openclip_embedding.npy
+cond_dropout: 0.0   
+# ------------------------ training parameters -------------------
+# tracking metrics
+metric_tracker_cfg:
+  target: diff2flow.metrics.DepthMetricTracker
+# visualizer
+visualizer:
+  target: diff2flow.visualizer.ImageDepthVisualizer

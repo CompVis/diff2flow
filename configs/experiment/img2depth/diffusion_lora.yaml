@@ -1,0 +1,8 @@
+# @package _global_
+defaults:
+  - override /model: diffusion_ch8
+  - override /data: dummy_depth
+  - override /lora: c0.2_fullA0.2_FL
+  - override /task: img2depth
+
+name: img2depth/diffusion/lora/c2_a2_first_last/v0

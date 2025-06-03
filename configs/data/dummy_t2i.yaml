@@ -1,0 +1,17 @@
+name: Dummy_T2I
+target: diff2flow.dataloader.DataModuleFromConfig
+params:
+  batch_size: 8
+  num_workers: 4
+  val_batch_size: 4
+  train:
+    target: diff2flow.dataloader.DummyDataset
+    params:
+      x1: [3, 512, 512]       # image/jpg
+      txt: "image of a dog"   # caption
+
+  validation:
+    target: diff2flow.dataloader.DummyDataset
+    params:
+      x1: [3, 512, 512]
+      txt: "image of a dog"

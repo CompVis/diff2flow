@@ -1,0 +1,9 @@
+name: AutoencoderKL
+# scale factor for normalising the latent space (default value in SD)
+scale_factor: 0.18215
+first_stage_cfg:
+  # first stage model (KL-Autoencoder from LDM)
+  target: diff2flow.kl_autoencoder.AutoencoderKL
+  params:
+    ckpt_path: checkpoints/sd_ae.ckpt
+    scale: 1.0      # legacy: new version sets scale to 0.18215, s.t. it doesnt need to be scaled elsewhere

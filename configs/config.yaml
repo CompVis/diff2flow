@@ -1,0 +1,80 @@
+defaults:
+  - _self_
+  - autoencoder: sd_ae
+  - model: diffusion_ch4
+  - lora: null
+  - data: dummy_t2i
+  - task: txt2img
+  - experiment: null
+
+  # disable hydra logging
+  - override hydra/hydra_logging: disabled  
+  - override hydra/job_logging: disabled 
+  
+# ----------------------------------------
+name: debug/your_exp/dummy
+
+# ----------------------------------------
+# logging
+use_wandb: False
+use_wandb_offline: False
+
+# checkpoint loading
+load_weights: null
+load_lora_weights: null
+resume_checkpoint: null
+
+# ----------------------------------------
+# training logics
+train:
+  lr: 3e-5
+  weight_decay: 0.0
+  sampling_steps: 50
+  # EMA stuff
+  ema_rate: 0.999               # if 0, no EMA
+  ema_update_every: 1
+  ema_update_after_step: 1000
+  use_ema_for_sampling: True      # whether to use EMA model for sampling
+  # Misc
+  n_images_to_vis: 16
+  log_grad_norm: False
+  # Training metrics
+  checkpoint_callback_params:   # filename refers to number of gradient updates
+    every_n_train_steps: 10000  # gradient update steps
+    save_top_k: -1              # needs to be -1, otherwise it overwrites
+    verbose: True
+    save_last: True
+    auto_insert_metric_name: False
+  trainer_params:
+    max_epochs: -1
+    num_sanity_val_steps: 0
+    accumulate_grad_batches: 1  # set to 6 for single node training, s.t. bs>=128
+    log_every_n_steps: 50       # gradient update steps
+    limit_val_batches: 16       # calculate number of samples for 1k FID - TODO
+    val_check_interval: 2500    # steps, regardless of gradient accumulation
+    precision: 32-true
+  lr_scheduler: null
+    # target: diff2flow.lr_schedulers.get_constant_schedule_with_warmup
+    # params:
+    #   num_warmup_steps: 0
+  callbacks:
+    - target: pytorch_lightning.callbacks.LearningRateMonitor
+      params:
+        logging_interval: 'step'
+
+# ----------------------------------------
+# distributed
+num_nodes: 1
+devices: -1
+auto_requeue: False
+tqdm_refresh_rate: 1
+deepspeed_stage: 0
+p2p_disable: False
+slurm_id: null
+
+# ----------------------------------------
+# don't log and save files
+hydra:
+  output_subdir: null
+  run:
+    dir: .

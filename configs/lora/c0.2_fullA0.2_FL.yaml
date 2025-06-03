@@ -1,0 +1,9 @@
+lora_cfg:
+  lora_type: lora
+  lora_conv: 0.2
+  lora_full_attn: 0.2
+  # lora_self_attn: 0.0
+  do_full_first_conv: True
+  do_full_last_conv: True
+  lora_scale: 1
+context_mapper_cfg: null

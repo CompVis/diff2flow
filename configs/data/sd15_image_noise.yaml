@@ -1,0 +1,47 @@
+name: SD1.5_Image_Noise_LAION_ART
+target: diff2flow.dataloader.WebDataModuleFromConfig
+params:
+  tar_base: ...
+  batch_size: 8
+  num_workers: 8
+  val_batch_size: 8
+  val_num_workers: 2
+  multinode: True
+  train:
+    shards: "{00000..00219}.tar"      # until 00219.tar we have 1,644,334 samples
+    shuffle: 100
+    image_key: image.jpg
+    rename:
+      x1: image.jpg
+      x1_latent: image_latent.npy
+      noise: noise.npy
+      txt: prompt.txt
+    image_transforms:
+      - target: diff2flow.dataset.image_preprocessing.CenterCropResize
+        params:
+          size: 512
+      - target: torchvision.transforms.RandomHorizontalFlip
+        params:
+          p: 0.5
+    dataset_transforms:
+      target: diff2flow.dataset.image_preprocessing.RescaleDiffusersLatent
+      params:
+        divisor: 0.18215
+
+  validation:
+    shards: "{00220..00267}.tar"
+    shuffle: False
+    image_key: image.jpg
+    rename:
+      x1: image.jpg
+      x1_latent: image_latent.npy
+      noise: noise.npy
+      txt: prompt.txt
+    image_transforms:
+      - target: diff2flow.dataset.image_preprocessing.CenterCropResize
+        params:
+          size: 512
+    dataset_transforms:
+      target: diff2flow.dataset.image_preprocessing.RescaleDiffusersLatent
+      params:
+        divisor: 0.18215

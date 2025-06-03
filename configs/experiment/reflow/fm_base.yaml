@@ -1,0 +1,20 @@
+# @package _global_
+defaults:
+  - override /model: fm_ch4
+  - override /data: sd15_image_noise
+  - override /lora: null
+  - override /task: txt2img
+
+name: reflow/sd15_image_noise/fm/base/v0
+
+train:
+  lr: 5e-5
+  sampling_steps: 10
+  trainer_params:
+    precision: 16-mixed
+
+# also show the image corresponding to the noise
+task:
+  visualizer:
+    params:
+      show_x1: True

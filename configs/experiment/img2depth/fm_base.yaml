@@ -1,0 +1,8 @@
+# @package _global_
+defaults:
+  - override /model: fm_ch8
+  - override /data: dummy_depth
+  - override /lora: null
+  - override /task: img2depth
+
+name: img2depth/fm/base/v0

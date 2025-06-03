@@ -1,0 +1,16 @@
+name: txt2img
+# ------------------------ conditioning --------------------------
+# context settings (concatenation)
+context_key: null
+# conditioning settings (cross-attention)
+conditioning_key: txt
+cond_stage_cfg:
+  target: diff2flow.conditioning.encoders.FrozenCLIPEmbedder
+cond_dropout: 0.02
+# ------------------------ training parameters -------------------
+# tracking metrics
+metric_tracker_cfg:
+  target: diff2flow.metrics.ImageMetricTracker
+# visualizer
+visualizer:
+  target: diff2flow.visualizer.T2IVisualizer

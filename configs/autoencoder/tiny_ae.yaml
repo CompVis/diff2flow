@@ -1,0 +1,8 @@
+name: TinyAutoencoderKL
+scale_factor: 1.0
+first_stage_cfg:
+  target: diff2flow.tiny_autoencoder.TinyAutoencoderKL
+  params:
+    encoder_path: checkpoints/taesd_encoder.pth
+    decoder_path: checkpoints/taesd_decoder.pth
+    latent_channels: 4

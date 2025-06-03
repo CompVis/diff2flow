@@ -1,0 +1,19 @@
+# ------------------------ flow matching model -------------------
+# whether we want to start from a gaussian normal or some starting data
+start_from_noise: True
+# we can also first noise the image with the forward process of the
+# diffusion process. If set to -1, we simply take the original image.
+noising_step: -1
+# flow-matching model
+fm_cfg:
+  target: diff2flow.flow.FlowModel
+  params:
+    sigma_min: 0.0
+    schedule: linear
+    # config file for the UNet/UVit architecture (SD-v2.1)
+    net_cfg:
+      target: diff2flow.models.unet.openaimodel.UNetModel
+      params:
+        # if the input channels is not 4 then we duplicate the input layer
+        in_channels: 4
+        load_from_ckpt: checkpoints/v2-1_768-ema-pruned.ckpt

@@ -1,0 +1,11 @@
+# @package _global_
+defaults:
+  - override /model: obj_ch4
+  - override /data: dummy_t2i
+  - override /lora: c0.2_fullA0.2_FL
+  - override /task: txt2img
+
+name: txt2img/obj/lora/c2_a2_first_last/v0
+
+train:
+  lr: 1e-5
