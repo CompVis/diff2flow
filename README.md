@@ -10,7 +10,7 @@
 
 <p><strong>📄 CVPR 2025</strong></p>
 
-<a href="https://github.com/CompVis/diff2flow" target="_blank">
+<a href="https://arxiv.org/abs/2506.02221" target="_blank">
   <img src="https://img.shields.io/badge/arXiv-PDF-b31b1b" alt="Paper PDF">
 </a>
 
